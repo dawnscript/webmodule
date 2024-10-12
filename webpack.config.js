@@ -1,3 +1,4 @@
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -6,6 +7,12 @@ module.exports = {
         filename: 'script.js',
         path: path.resolve(__dirname, 'dist/script'),
     },
+    plugins: [
+        new HTMLWebpackPlugin({
+            template: './src/index.html',
+            filename: '../index.html',
+        }),
+    ],
     module: {
         rules: [
             {
@@ -18,6 +25,10 @@ module.exports = {
                 },
               },
             },
+            {
+              test: /\.css$/,
+              use: ['style-loader', 'css-loader'],
+            }
         ],
     },
 }

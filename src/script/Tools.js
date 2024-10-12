@@ -34,7 +34,7 @@ export function enterFunc(node,button) {
 }
 export function popMsg(msg,node){
     const popOutText = document.createElement('div');
-    popOutText.setAttribute('id', 'CopiedMessage');
+    popOutText.setAttribute('id', 'copiedMessage');
     popOutText.textContent = msg;
     document.body.appendChild(popOutText);
     const triggerNode = node === undefined ? this : node;
@@ -43,7 +43,7 @@ export function popMsg(msg,node){
     popOutText.style.top = `${position.bottom + window.scrollY}px`;
     popOutText.style.left = `${(position.left + position.right) / 2 + window.scrollX - popWidth}px`;
     setTimeout(() => {
-        let text = document.querySelector('#CopiedMessage');
+        let text = document.querySelector('#copiedMessage');
         text.remove();
     }, 1000)
 }
@@ -76,4 +76,21 @@ export function objCompare(objA, objB){
         else if (value !== objB[key]) output = false;
     });
     return output;
+}
+export function navBar(lists){
+    const navBar = document.querySelector('nav');
+    Object.entries(lists).forEach(([list, titles]) => {
+        const stDiv = navBar.appendChild(document.createElement('div'));
+        const title = stDiv.appendChild(document.createElement('b'));
+        title.appendChild(document.createElement('div'))
+        title.querySelector('div').textContent = list;
+        const linkDiv = stDiv.appendChild(document.createElement('div'));
+        Object.entries(titles).forEach(([title, link]) => {
+            const aTag = linkDiv.appendChild(document.createElement('a'));
+            link.target = link.target === undefined ? '_blank' : link.target;
+            Object.entries(link).forEach(([attribute, value]) => aTag.setAttribute(attribute, value));
+            aTag.appendChild(document.createElement('div')).textContent = title;
+        });
+    });
+    Array.from(document.querySelectorAll('nav>div')).forEach(amber => amber.style.width = `${String(1 / Object.keys(lists).length) * 100}%`);
 }
